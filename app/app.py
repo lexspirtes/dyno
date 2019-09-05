@@ -32,6 +32,7 @@ addRows()
 
 @app.route("/", methods = ["POST", "GET"])
 def home():
+    exact = []
     if request.form:
         searchSeq = request.form.get('sequence')
         exact = Virus.query.filter(Virus.sequence.like('%' + searchSeq + '%')).all()
