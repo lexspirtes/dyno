@@ -1,25 +1,9 @@
-import os
-from flask import Flask
 from flask import render_template
 from flask import request
-import psycopg2
 from etl import Etl
+from models import Virus
+from config import app, db
 
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-db = SQLAlchemy(app)
-
-class Virus(db.Model):
-    __tablename__ = "viruses"
-    header = db.Column(db.Text, primary_key=True, nullable=False)
-    sequence = db.Column(db.Text, nullable=False)
-
-    def __repr__(self):
-        return "<Header: {}>".format(self.header) + "<Sequence: {}>".format(self.sequence)
 
 def addRows():
     if Virus.query.first() == None:
@@ -30,13 +14,28 @@ def addRows():
 
 addRows()
 
+def hamSQL(s):
+    SQL = "SELECT * FROM VIRUSES WHERE "
+    for index,char in enumerate(s):
+        SQL +=  "SEQUENCE LIKE '%" + s[:index]+"_"+s[index+1:] + "%'"
+        if index != len(s) -1:
+            SQL += " OR "
+    return SQL
+
 @app.route("/", methods = ["POST", "GET"])
 def home():
     exact = []
+    hamming = []
     if request.form:
+    #    engine = db.create_engine(DATABASE_URL)
         searchSeq = request.form.get('sequence')
         exact = Virus.query.filter(Virus.sequence.like('%' + searchSeq + '%')).all()
-    return render_template("home.html", viruses=exact)
+
+        print("exact matches:" + str(len(exact)))
+        #need to remove duplicates from matches
+        hamming = db.session.execute(hamSQL(searchSeq)).fetchall()
+
+    return render_template("home.html", exact=exact, hamming=hamming)
 
 if __name__ == "__main__":
     app.run(debug=True)

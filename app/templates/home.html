@@ -5,8 +5,13 @@
       <input type="text" name="sequence">
       <input type="submit" value="Search">
     </form>
-    {% for virus in viruses %}
+    <h2> Exact Matches </h2>
+    {% for virus in exact %}
     <h4> {{virus.header}}</h4>
+    {% endfor %}
+    <h2> Hamming Matches </h2>
+    {% for virus in hamming %}
+    <h4> {{virus[0]}}</h4>
     {% endfor %}
   </body>
 </html>
