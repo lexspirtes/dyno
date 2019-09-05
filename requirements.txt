@@ -4,3 +4,5 @@ django-heroku
 flask
 psycopg2
 Flask-SQLAlchemy
+pandas
+re
