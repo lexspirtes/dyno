@@ -3,6 +3,7 @@ from flask import request
 from etl import Etl
 from models import Virus
 from config import app, db
+from data import hamSQL, exactSQL
 
 
 def addRows():
@@ -14,14 +15,6 @@ def addRows():
 
 addRows()
 
-def hamSQL(s):
-    SQL = "SELECT * FROM VIRUSES WHERE "
-    for index,char in enumerate(s):
-        SQL +=  "SEQUENCE LIKE '%" + s[:index]+"_"+s[index+1:] + "%'"
-        if index != len(s) -1:
-            SQL += " OR "
-    return SQL
-
 @app.route("/", methods = ["POST", "GET"])
 def home():
     exact = []
@@ -29,12 +22,13 @@ def home():
     if request.form:
     #    engine = db.create_engine(DATABASE_URL)
         searchSeq = request.form.get('sequence')
-        exact = Virus.query.filter(Virus.sequence.like('%' + searchSeq + '%')).all()
-
+        exact = db.session.execute(exactSQL(searchSeq)).fetchall()
         print("exact matches:" + str(len(exact)))
-        #need to remove duplicates from matches
+        for ex in exact:
+            if searchSeq not in ex.sequence:
+                print("False")
         hamming = db.session.execute(hamSQL(searchSeq)).fetchall()
-
+        print("hamming matches:" + str(len(hamming)))
     return render_template("home.html", exact=exact, hamming=hamming)
 
 if __name__ == "__main__":

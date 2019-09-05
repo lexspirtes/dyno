@@ -1,0 +1,21 @@
+body {
+  margin-left: 5%;
+  font-family: "Noto Sans";
+  margin-bottom: 100px;
+  color: #260021;
+}
+h1{
+  font-family: "Andale Mono";
+}
+  #results {
+      width:95%;
+      height: 300px;
+      overflow: scroll;
+  }
+  #virus {
+    background-color: rgba(189, 204, 222, .4);
+    color: #260021;
+    padding-left: 3px;
+    padding-right: 1px;
+    margin-top: 10px;
+  }

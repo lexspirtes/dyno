@@ -1,17 +1,57 @@
+<!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
   <body>
-    <h1> Virus Search </h1>
+    <h1> Virus Finder </h1>
     <form method="POST" action="/">
       <input type="text" name="sequence">
       <input type="submit" value="Search">
     </form>
-    <h2> Exact Matches </h2>
-    {% for virus in exact %}
-    <h4> {{virus.header}}</h4>
-    {% endfor %}
-    <h2> Hamming Matches </h2>
-    {% for virus in hamming %}
-    <h4> {{virus[0]}}</h4>
-    {% endfor %}
+    {% if exact %}
+    <h3> Exact Matches: {{exact|length}} </h3>
+    <div id="results">
+      {% for virus in exact %}
+      <div id="virus">
+        {{virus[0]}}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if hamming %}
+    <h3> Hamming Matches: {{hamming|length}} </h3>
+    <div id="results">
+      {% for virus in hamming %}
+      <div id="virus">
+        {{virus[0]}}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
   </body>
 </html>
+
+<!-- <style type='text/css'>
+  body {
+    margin-left: 5%;
+    font-family: "Noto Sans";
+    margin-bottom: 100px;
+    color: #260021;
+  }
+  h1{
+    font-family: "Andale Mono";
+  }
+    #results {
+        width:95%;
+        height: 300px;
+        overflow: scroll;
+    }
+    #virus {
+      background-color: rgba(189, 204, 222, .4);
+      color: #260021;
+      padding-left: 3px;
+      padding-right: 1px;
+      margin-top: 10px;
+    }
+</style> -->
