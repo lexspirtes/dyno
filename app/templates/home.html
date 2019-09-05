@@ -5,5 +5,8 @@
       <input type="text" name="sequence">
       <input type="submit" value="Search">
     </form>
+    {% for virus in viruses %}
+    <h4> {{virus.header}}</h4>
+    {% endfor %}
   </body>
 </html>

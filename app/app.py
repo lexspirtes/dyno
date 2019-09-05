@@ -33,8 +33,9 @@ addRows()
 @app.route("/", methods = ["POST", "GET"])
 def home():
     if request.form:
-        print(request.form)
-    return render_template("home.html")
+        searchSeq = request.form.get('sequence')
+        exact = Virus.query.filter(Virus.sequence.like('%' + searchSeq + '%')).all()
+    return render_template("home.html", viruses=exact)
 
 if __name__ == "__main__":
     app.run(debug=True)
