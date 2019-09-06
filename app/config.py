@@ -11,4 +11,4 @@ DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 db = SQLAlchemy(app)
-engine = db.create_engine(DATABASE_URL)
+engine = db.create_engine(DATABASE_URL, {})
