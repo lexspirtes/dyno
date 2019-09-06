@@ -29,6 +29,16 @@
       {% endfor %}
     </div>
     {% endif %}
+    {% if edit %}
+    <h3> Edit Matches: {{edit|length}} </h3>
+    <div id="results">
+      {% for virus in edit %}
+      <div id="virus">
+        {{virus[0]}}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
   </body>
 </html>
 

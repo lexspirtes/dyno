@@ -3,10 +3,14 @@ import re
 
 class Etl:
     def __init__(self):
-        self.location = "Users/Lex/desktop/Parvoviridae_full_130_refseq_sequence.txt"
         self.data = self.getData()
 
     def getData(self):
+        """
+        opens txt file and loads FASTA data in df
+        returns
+            df: columns =[header,sequence]
+        """
         f = open(u"/Users/Lex/desktop/Parvoviridae_full_130_refseq_sequence.txt", "r").read()
         def splitList(f):
             f = re.sub("\n", "", f)
@@ -17,4 +21,6 @@ class Etl:
                 fList[index] = r
             df = pd.DataFrame(fList, columns=['header', 'sequence'])
             return df
-        return splitList(f)
+        df = splitList(f)
+        f.close()
+        return df

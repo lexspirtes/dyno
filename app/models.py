@@ -1,6 +1,9 @@
 from config import db
 
 class Virus(db.Model):
+    """
+    virus table model in db
+    """
     __tablename__ = "viruses"
     header = db.Column(db.Text, primary_key=True, nullable=False)
     sequence = db.Column(db.Text, nullable=False)
