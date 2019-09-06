@@ -1,9 +1,10 @@
 # dyno
+https://dyno-lex.herokuapp.com/ <br>
 An app that allow a user to search a DB of FASTA genomes for a specific DNA sequence, returning: 
 - exact matches
 - hamming distance 1 matches (including exact matches)
-- and edit distance 1 matches (insertion, substition, and deletion as well as exact matches)<br>
-To view the app: https://dyno-lex.herokuapp.com/
+- and edit distance 1 matches (insertion, substition, and deletion as well as exact matches)
+
 
 ## SQL Query Generation
 example = "AGCC"
