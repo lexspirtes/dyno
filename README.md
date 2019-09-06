@@ -1,4 +1,5 @@
 # dyno
+https://dyno-lex.herokuapp.com/
 An app that allow a user to search a DB of FASTA genomes for a specific DNA sequence, returning: 
 - exact matches
 - hamming distance 1 matches (including exact matches)
